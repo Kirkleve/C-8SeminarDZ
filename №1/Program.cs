@@ -15,20 +15,15 @@
 int lines = InputNumber("Введите кол-то строк");
 int colomns = InputNumber("Введите кол-во столбцов");
 int[,] array = new int[lines, colomns];
-
 FillArray(array, 1, 10);
 PrintArray(array);
 
+int[,] minValue = MinValue(array);
+
+PrintArray(minValue);
 
 
 
-for (int i = 0; i < array.GetLength(0); i++)
-{
-    for (int j = 0; j < array.GetLength(1); j++)
-    {
-    
-    }
-}
 
 
 
@@ -62,3 +57,60 @@ void PrintArray(int[,] matrix)
     }
 }
 
+int[,] MinValue(int[,] array)
+{
+    int x = 0;
+    int[,] newArray = new int[array.GetLength(0)-1, array.GetLength(1)-1];
+    int[,] minValue = new int[0, 0];
+    for (int i = 0; i < array.GetLength(0); i++)
+    {
+        for (int j = 0; j < array.GetLength(1); j++)
+        {
+            if (minValue[i,j] > array[i, j])
+            {
+                newArray[x,x] = array[i, j];
+                x++;
+
+            }    
+        }
+        
+    }
+    return newArray; 
+}
+
+int[,] DeleteRow(int[,] array, int row)
+        {
+            int[,] result = new int[array.GetLength(0)-1, array.GetLength(1)];
+            int x = 0;
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                if (i == row)
+                {
+                    row = -1;
+                    continue;
+                }
+ 
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    result[x, j] = array[i, j];
+                }
+                x++;
+            }
+            return result;
+        }
+
+int[,] DeleteColomns(int[,] array, int col)
+        {
+            int[,] result = new int[array.GetLength(0), array.GetLength(1)-1];
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                int x = 0;
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (j == col)continue;
+                    result[i, x] = array[i, j];
+                    x++;
+                }
+            }
+            return result;
+        }
