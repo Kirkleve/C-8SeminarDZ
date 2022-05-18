@@ -12,20 +12,33 @@
 2 2 6
 3 4 7
 */
+                                //complite
 int lines = InputNumber("Введите кол-то строк");
 int colomns = InputNumber("Введите кол-во столбцов");
 int[,] array = new int[lines, colomns];
 FillArray(array, 1, 10);
 PrintArray(array);
-
-int[,] minValue = MinValue(array);
-
-PrintArray(minValue);
-
-
-
-
-
+Console.WriteLine();
+int minValue = MinValue(array);
+int minLines = MinRow(array);
+int minColomns = MinCol(array);
+Console.WriteLine($"Минимальное число {minValue} находится в строке {minLines}, в столбце {minColomns}");
+int[,] newArray = new int[lines-1, colomns-1];
+int k = 0; 
+int l = 0;
+for (int i = 0; i < newArray.GetLength(0); i++)
+{
+    l = 0;
+    if (i == minLines) k++;
+    for (int j = 0; j < newArray.GetLength(1); j++)
+    {
+        if (j == minColomns) l++;
+        newArray[i, j] = array[k, l];
+        l++;
+    }
+    k++;
+}
+PrintArray(newArray);
 
 
 int InputNumber(string output)
@@ -57,60 +70,62 @@ void PrintArray(int[,] matrix)
     }
 }
 
-int[,] MinValue(int[,] array)
+int MinValue(int[,] matrix)
 {
-    int x = 0;
-    int[,] newArray = new int[array.GetLength(0)-1, array.GetLength(1)-1];
-    int[,] minValue = new int[0, 0];
-    for (int i = 0; i < array.GetLength(0); i++)
+    int minRow = 0;
+    int minCol = 0;
+    int minValue = matrix[0, 0];
+    for (int i = 0; i < matrix.GetLength(0); i++)
     {
-        for (int j = 0; j < array.GetLength(1); j++)
+        for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            if (minValue[i,j] > array[i, j])
+            if (matrix[i, j] < minValue)
             {
-                newArray[x,x] = array[i, j];
-                x++;
-
-            }    
+                minValue = matrix[i, j];
+                minRow = i;
+                minCol = j;
+            }
         }
-        
     }
-    return newArray; 
+    return minValue;
 }
 
-int[,] DeleteRow(int[,] array, int row)
+int MinRow(int[,] matrix)
+{
+    int minRow = 0;
+    int minCol = 0;
+    int minValue = matrix[0, 0];
+    for (int i = 0; i < matrix.GetLength(0); i++)
+    {
+        for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            int[,] result = new int[array.GetLength(0)-1, array.GetLength(1)];
-            int x = 0;
-            for (int i = 0; i < array.GetLength(0); i++)
+            if (matrix[i, j] < minValue)
             {
-                if (i == row)
-                {
-                    row = -1;
-                    continue;
-                }
- 
-                for (int j = 0; j < array.GetLength(1); j++)
-                {
-                    result[x, j] = array[i, j];
-                }
-                x++;
+                minValue = matrix[i, j];
+                minRow = i;
+                minCol = j;
             }
-            return result;
         }
+    }
+    return minRow;
+}
 
-int[,] DeleteColomns(int[,] array, int col)
+int MinCol(int[,] matrix)
+{
+    int minRow = 0;
+    int minCol = 0;
+    int minValue = matrix[0, 0];
+    for (int i = 0; i < matrix.GetLength(0); i++)
+    {
+        for (int j = 0; j < matrix.GetLength(1); j++)
         {
-            int[,] result = new int[array.GetLength(0), array.GetLength(1)-1];
-            for (int i = 0; i < array.GetLength(0); i++)
+            if (matrix[i, j] < minValue)
             {
-                int x = 0;
-                for (int j = 0; j < array.GetLength(1); j++)
-                {
-                    if (j == col)continue;
-                    result[i, x] = array[i, j];
-                    x++;
-                }
+                minValue = matrix[i, j];
+                minRow = i;
+                minCol = j;
             }
-            return result;
         }
+    }
+    return minCol;
+}

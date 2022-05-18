@@ -3,15 +3,47 @@
 Напишите программу, которая упорядочит 
 по убыванию элементы каждой строки двумерного массива.
 */
+                     //Think
 int lines = InputNumber("Введите кол-то строк");
 int colomns = InputNumber("Введите кол-во столбцов");
 int[,] array = new int[lines, colomns];
 FillArray(array, 1, 10);
 PrintArray(array);
 
+for (var i = 0; i < array.GetLength(0); i++)
+{
+    int[] tempArray = new int[array.GetLength(1)];
+    for(int j = 0; j < array.GetLength(1); j++)
+    {
+        tempArray[j] = array[i, j];
+    }
+    tempArray = BubbleSort(tempArray);
 
+    for (var j = 0; j < array.GetLength(1); j++)
+    {
+        array[i, j] = tempArray[j];
+    }
+}
 
+Console.WriteLine("Конечный массив: ");
+PrintArray(array);
 
+int[] BubbleSort(int[] array)
+{
+	for (int i = 0; i < array.Length; i++)
+    {
+        for (int j = 0; j < array.Length - 1; j++)
+        {
+            if (array[j] < array[j + 1])
+	        {
+		        int t = array[j + 1];
+		        array[j + 1] = array[j];
+		        array[j] = t;
+    	    }
+        }
+    }
+	return array;
+}
 
 int InputNumber(string output)
 {
