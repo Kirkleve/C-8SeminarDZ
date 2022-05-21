@@ -2,30 +2,18 @@
 Задача 58: Задайте две матрицы. 
 Напишите программу, которая будет находить произведение двух матриц.
 */
-                           //complite
-int lines = InputNumber("Введите кол-то строк");
-int colomns = InputNumber("Введите кол-во столбцов");
-int[,] festArray = new int[lines, colomns];
-int[,] secondArray = new int[lines, colomns];
-int[,] newArray = new int[lines, colomns];
-FillArray(festArray, 1, 10);
-PrintArray(festArray);
+                                        //complite
+int numbers = InputNumber("Введите кол-то строк и столбцов");
+int[,] firstArray = new int[numbers, numbers];
+int[,] secondArray = new int[numbers, numbers];
+FillArray(firstArray, 1, 10);
+PrintArray(firstArray);
 Console.WriteLine();
 FillArray(secondArray, 1, 10);
 PrintArray(secondArray);
-for (int i = 0; i < festArray.GetLength(0); i++)
-{
-    for (int j = 0;j <secondArray.GetLength(1); j++)
-    {
-        for ( int k =0; k < festArray.GetLength(0); k++)
-        {
-            newArray[i,j] += festArray[i,k] * secondArray[k,j];
-        }
-    }
-}
 Console.WriteLine();
-PrintArray(newArray);
-
+int[,] multiplicationArray = MultiplicationMatrix(firstArray, secondArray);
+PrintArray(multiplicationArray);
 
 int InputNumber(string output)
 {
@@ -56,3 +44,23 @@ void PrintArray(int[,] matrix)
     }
 }
 
+int[,] MultiplicationMatrix(int[,] firstArray, int[,] secondArray)
+{
+    int[,] newArray = new int[firstArray.GetLength(0), secondArray.GetLength(1)];
+    if (firstArray.GetLength(0) != secondArray.GetLength(1))
+    {
+        return firstArray;
+    }
+
+    for (int i = 0; i < firstArray.GetLength(0); i++)
+    {
+        for (int j = 0; j < secondArray.GetLength(1); j++)
+        {
+            for (int k = 0; k < firstArray.GetLength(0); k++)
+            {
+                newArray[i, j] += firstArray[i, k] * secondArray[k, j];
+            }
+        }
+    }
+    return newArray;
+}
